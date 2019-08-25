@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:adm="http://github.com/adminfaces"
+	template="#{layoutMB.template}">
+	<ui:define name="title">
+        Cadastro de Pessoa
+    </ui:define>
+	<ui:define name="body">
+		<h:form id="form" prependId="false">
+			<p:focus context="@form" />
+			<p:panel styleClass="box-primary card">
+				<hr />
+				<div class="ui-g ui-fluid ui-g-nopad">
+					<div class="ui-sm-12 ui-g-6 ">
+						<div class="ui-sm-12 ui-g-12">
+							<div class="ui-sm-12 ui-g-12">
+								<p:outputLabel value="Nome:" for="nome" />
+								<p:inputText id="nome" value="#{pessoaFormMB.pessoa.nome}" readonly="#{pessoaFormMB.pessoa.id != 0}"
+									required="true" />
+								<span class="help-block"> <p:message for="nome" />
+								</span>
+							</div>
+						</div>
+						<div class="ui-sm-12 ui-g-6">
+							<div class="ui-sm-12 ui-g-11">
+								<p:outputLabel value="CPF: " for="cpf" />
+								<p:inputMask id="cpf" value="#{pessoaFormMB.pessoa.cpf}" readonly="#{pessoaFormMB.pessoa.id != 0}"
+									mask="999.999.999-99" required="true" />
+
+								<span class="help-block"> <p:message for="cpf" />
+								</span>
+							</div>
+						</div>
+						<div class="ui-sm-12 ui-g-6">
+							<div class="ui-sm-12 ui-g-12 ">
+								<p:outputLabel value="Data Nascimento: " for="dataNascimento" />
+								<p:inputMask id="dataNascimento" readonly="#{pessoaFormMB.pessoa.id != 0}"
+									value="#{pessoaFormMB.pessoa.dataNascimento}" mask="99/99/9999">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+
+								</p:inputMask>
+								<span class="help-block"> <p:message for="dataNascimento" />
+								</span>
+							</div>
+						</div>
+
+					</div>
+					<div class="ui-sm-12 ui-g-6 ">
+						<div class="ui-sm-12 ui-g-12">
+							<div class="ui-sm-12 ui-g-12">
+								<p:dataList value="#{pessoaFormMB.fotos.keySet()}" var="foto"
+									type="ordered" id="listaDeFotos">
+									<f:facet name="header">
+							          Arquivos
+							      </f:facet>
+							      #{foto.fileName}
+							  </p:dataList>
+							</div>
+							<div class="ui-sm-12 ui-g-12">
+								<p:fileUpload multiple="true" update="listaDeFotos"
+									mode="advanced" uploadLabel="Enviar" cancelLabel="Cancelar"
+									label="Adicionar" dragDropSupport="true"
+									fileUploadListener="#{pessoaFormMB.upload}" />
+							</div>
+						</div>
+						<div class="ui-sm-6 ui-g-6">
+							<p:galleria value="#{pessoaFormMB.images}" var="image"
+								panelWidth="500" panelHeight="313">
+								<p:graphicImage value="#{image}" width="100%" height="100%"
+									alt="Image Description for #{image}" title="#{image}" />
+							</p:galleria>
+						</div>
+
+					</div>
+					<div class="ui-sm-12 ui-g-12 ">
+
+						<p:commandButton value="Cadastrar" styleClass="btn btn-primary" rendered="#{!(pessoaFormMB.pessoa.id != 0)}"
+							ajax="true" update="@form"
+							actionListener="#{pessoaFormMB.cadastrar()}"></p:commandButton>
+						<p:commandButton value="Salvar" styleClass="btn btn-primary" rendered="#{pessoaFormMB.pessoa.id != 0}"
+							ajax="true" update="@form"
+							actionListener="#{pessoaFormMB.salvar()}"></p:commandButton>
+					</div>
+				</div>
+
+			</p:panel>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+				styleClass="box-danger box-solid">
+				<p:commandButton value="Yes" type="button"
+					styleClass="btn-material btn-primary ui-confirmdialog-yes"
+					icon="fa fa-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="btn-material btn-danger ui-confirmdialog-no"
+					icon="fa fa-close" />
+			</p:confirmDialog>
+		</h:form>
+
+
+	</ui:define>
+
+</ui:composition>

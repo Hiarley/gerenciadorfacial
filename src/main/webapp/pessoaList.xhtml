@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:adm="http://github.com/adminfaces"
+	template="#{layoutMB.template}">
+
+	<ui:define name="metadata">
+		<ui:param name="title" value="Gerenciador de Pessoas" />
+		<!-- Automatic create breadCrumb and page title when param 'title' is provided. -->
+
+		<style type="text/css">
+.ui-datatable .ui-datatable-header {
+	text-align: right !important;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="description">
+		Gerenciamento de pessoas utilizadas para o reconhecimento facial.
+    </ui:define>
+
+	<ui:define name="body">
+		<h:form>
+			<p:focus context="@form" />
+			<div class="box box-primary">
+				<div class="box-header with-border">
+					<div id="main-buttons" class="hidden-sm hidden-xs">
+						<p:commandButton action="/pessoaForm?faces-redirect=true"
+							icon="fa fa-plus" value="Novo" styleClass="btn-primary" />
+					</div>
+					<p:separator />
+					<p:dataTable var="pessoa" id="tblPessoas" reflow="true" rows="10"
+						value="#{pessoaListMB.pessoas}" rowsPerPageTemplate="10, 15, 20"
+						paginatorPosition="bottom" lazy="true" rowKey="#{pessoa.id}">
+						<f:facet name="header">
+				           LISTA 
+				        </f:facet>
+						<p:column headerText="Nome">
+							<h:outputText value="#{pessoa.nome}" />
+						</p:column>
+						<p:column headerText="CPF">
+							<h:outputText value="#{pessoa.cpf}" />
+						</p:column>
+						<p:column headerText="Data Nascimento">
+							<h:outputText value="#{pessoa.dataNascimento}">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+							</h:outputText>
+						</p:column>
+						<p:column width="3%">
+							<p:commandButton action="#{pessoaFormMB.editar(pessoa)}"  icon="fa fa-edit" styleClass=" btn-primary"></p:commandButton>
+						</p:column>
+
+
+					</p:dataTable>
+				</div>
+			</div>
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+				styleClass="box-danger box-solid">
+				<p:commandButton value="Yes" type="button"
+					styleClass="btn-material btn-primary ui-confirmdialog-yes"
+					icon="fa fa-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="btn-material btn-danger ui-confirmdialog-no"
+					icon="fa fa-close" />
+			</p:confirmDialog>
+		</h:form>
+
+
+
+		<p:dialog header="Selected cars" widgetVar="selectedCars" height="250"
+			width="400" responsive="true" styleClass="box-success">
+			<p:dataList id="selectedCarsList" value="#{carListMB.selectedCars}"
+				var="car" type="definition">
+                ID: #{car.id} - Name: #{car.name} - Model: #{car.model}
+            </p:dataList>
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>
