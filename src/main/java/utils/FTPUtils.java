@@ -46,7 +46,7 @@ public class FTPUtils {
 	}
 
 	public void criarDiretorioArquivo(Arquivo arquivo) throws IOException {
-		String[] pastas = arquivo.getCaminhoArquivo().split("\\\\");
+		String[] pastas = arquivo.getCaminhoArquivo().split(File.separator);
 		for (String pasta : pastas) {
 			ftp.makeDirectory(pasta);
 			ftp.changeWorkingDirectory(pasta);
@@ -54,7 +54,7 @@ public class FTPUtils {
 	}
 	
 	public void receberTodosArquivosPasta(String pasta) throws IOException {
-		String[] pastas = pasta.split("\\\\");
+		String[] pastas = pasta.split(File.separator);
 		inciarFTP();
 		for(String p : pastas) {
 			ftp.changeWorkingDirectory(p);

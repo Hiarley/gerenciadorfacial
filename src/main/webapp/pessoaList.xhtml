@@ -19,7 +19,7 @@
 	</ui:define>
 
 	<ui:define name="description">
-		Gerenciamento de pessoas utilizadas para o reconhecimento facial.
+		Gerenciamento de pessoas para o reconhecimento facial.
     </ui:define>
 
 	<ui:define name="body">
@@ -27,8 +27,8 @@
 			<p:focus context="@form" />
 			<div class="box box-primary">
 				<div class="box-header with-border">
-					<div id="main-buttons" class="hidden-sm hidden-xs">
-						<p:commandButton action="/pessoaForm?faces-redirect=true"
+					<div id="main-buttons" class="">
+						<p:commandButton action="#{pessoaFormMB.novoCadastro()}"
 							icon="fa fa-plus" value="Novo" styleClass="btn-primary" />
 					</div>
 					<p:separator />

@@ -14,12 +14,9 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.net.ftp.FTP;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
@@ -43,24 +40,34 @@ public class PessoaFormMB implements Serializable {
 	private PessoaService pessoaService;
 
 	public PessoaFormMB() {
-		
+		init();
 	}
 
 	@PostConstruct
 	public void init() {
 		pessoa = new Pessoa();
 		fotos = new HashMap<>();
+		images = new ArrayList<>();
 	}
 
 	public String editar(Pessoa pessoa) {
 		try {
-			init();
 			this.pessoa = pessoa;
 			carregaFotos(pessoa);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return redirect();
+	}
+	
+	public String novoCadastro() {
+		init();
+		return redirect();
+	
+	}
+
+	public String redirect() {
 		return "/pessoaForm?faces-redirect=true";
 	}
 	

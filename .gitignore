@@ -6,7 +6,10 @@
 
 .settings/
 
-
+bin/
+target/
+build/
+out/
 
 # IntelliJ
 
