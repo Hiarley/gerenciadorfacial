@@ -55,12 +55,43 @@
 			<artifactId>javacv</artifactId>
 			<version>1.5.1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.bytedeco/javacpp -->
+		<dependency>
+			<groupId>org.bytedeco</groupId>
+			<artifactId>javacpp</artifactId>
+			<version>1.5.1-1</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.bytedeco/javacv-platform -->
 		<dependency>
 			<groupId>org.bytedeco</groupId>
 			<artifactId>javacv-platform</artifactId>
 			<version>1.5.1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.bytedeco/javacv-platform -->
+		<dependency>
+			<groupId>org.bytedeco</groupId>
+			<artifactId>javacv-platform</artifactId>
+			<version>1.5.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.sun.jersey/jersey-server -->
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-server</artifactId>
+			<version>1.19.4</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.sun.jersey/jersey-client -->
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-client</artifactId>
+			<version>1.19.4</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-common -->
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-common</artifactId>
+			<version>2.29.1</version>
+		</dependency>
+
 
 	</dependencies>
 	<build>
@@ -73,106 +104,13 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
 		</plugins>
 		<finalName>reconhecimentoWeb</finalName>
 	</build>
-	<profiles>
-		<profile>
-			<id>swarm</id>
-			<properties>
-				<version.wildfly-swarm>2018.3.3</version.wildfly-swarm>
-			</properties>
-
-			<dependencies>
-				<dependency>
-					<groupId>org.wildfly.swarm</groupId>
-					<artifactId>jsf</artifactId>
-					<version>${version.wildfly-swarm}</version>
-				</dependency>
-				<dependency>
-					<groupId>org.wildfly.swarm</groupId>
-					<artifactId>cdi</artifactId>
-					<version>${version.wildfly-swarm}</version>
-				</dependency>
-				<dependency>
-					<groupId>org.wildfly.swarm</groupId>
-					<artifactId>ejb</artifactId>
-					<version>${version.wildfly-swarm}</version>
-				</dependency>
-				<dependency>
-					<groupId>org.omnifaces</groupId>
-					<artifactId>omnifaces</artifactId>
-					<version>2.1</version>
-				</dependency>
-			</dependencies>
-
-			<build>
-				<plugins>
-					<plugin>
-						<artifactId>maven-compiler-plugin</artifactId>
-						<version>3.5</version>
-						<configuration>
-							<source>1.8</source>
-							<target>1.8</target>
-						</configuration>
-					</plugin>
-					<plugin>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<version>2.19.1</version>
-						<configuration>
-							<skipTests>true</skipTests>
-						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-war-plugin</artifactId>
-						<version>2.6</version>
-						<configuration>
-							<failOnMissingWebXml>false</failOnMissingWebXml>
-						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>org.wildfly.swarm</groupId>
-						<artifactId>wildfly-swarm-plugin</artifactId>
-						<version>${version.wildfly-swarm}</version>
-						<executions>
-							<execution>
-								<id>package</id>
-							</execution>
-							<execution>
-								<id>start</id>
-							</execution>
-							<execution>
-								<id>stop</id>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-
-			<repositories>
-				<repository>
-					<id>jboss-public-repository-group</id>
-					<name>JBoss Public Repository Group</name>
-					<url>https://repository.jboss.org/nexus/content/groups/public/</url>
-					<releases>
-						<enabled>true</enabled>
-						<updatePolicy>never</updatePolicy>
-					</releases>
-					<snapshots>
-						<enabled>true</enabled>
-						<updatePolicy>daily</updatePolicy>
-					</snapshots>
-				</repository>
-				<repository>
-					<id>prime-repo</id>
-					<name>PrimeFaces Maven Repository</name>
-					<url>http://repository.primefaces.org</url>
-					<layout>default</layout>
-				</repository>
-			</repositories>
-		</profile>
-	</profiles>
 
 	<repositories>
 		<repository>

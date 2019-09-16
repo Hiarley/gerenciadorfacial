@@ -7,10 +7,11 @@ import static org.bytedeco.opencv.global.opencv_imgproc.rectangle;
 import static org.bytedeco.opencv.global.opencv_imgproc.resize;
 
 import java.io.File;
-import java.io.InputStream;
 
 import javax.faces.context.FacesContext;
 
+import org.bytedeco.javacpp.DoublePointer;
+import org.bytedeco.javacpp.IntPointer;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.OpenCVFrameConverter;
 import org.bytedeco.opencv.opencv_core.Mat;
@@ -18,12 +19,32 @@ import org.bytedeco.opencv.opencv_core.Rect;
 import org.bytedeco.opencv.opencv_core.RectVector;
 import org.bytedeco.opencv.opencv_core.Scalar;
 import org.bytedeco.opencv.opencv_core.Size;
+import org.bytedeco.opencv.opencv_face.FaceRecognizer;
+import org.bytedeco.opencv.opencv_face.LBPHFaceRecognizer;
 import org.bytedeco.opencv.opencv_objdetect.CascadeClassifier;
 
 public class DetectorFaceUtils {
 
-	private final CascadeClassifier classificador = new CascadeClassifier(FacesContext.getCurrentInstance().getExternalContext()
+	private final CascadeClassifier classificadorDeteccao = new CascadeClassifier(FacesContext.getCurrentInstance().getExternalContext()
 			.getRealPath(File.separator+"WEB-INF"+File.separator+"classes"+File.separator+"recursos"+File.separator+"haarcascade-frontalface-alt.xml"));
+	
+	private final FaceRecognizer classificadorReconhecimento = LBPHFaceRecognizer.create();
+			
+	
+	public void reconhecer(Mat faceCapturada) {
+		IntPointer rotulo = new IntPointer(1);
+        DoublePointer confianca = new DoublePointer(1);
+		classificadorReconhecimento.read(FacesContext.getCurrentInstance().getExternalContext()
+				.getRealPath(File.separator+"WEB-INF"+File.separator+"classes"+File.separator+"recursos"+File.separator+"classificadorLBPHYale.yml"));
+		classificadorReconhecimento.predict(faceCapturada, rotulo, confianca);
+		String nome;
+		int predicao = rotulo.get(0);
+        if (predicao == -1) {
+            nome = "Desconhecido";
+        } else {
+            System.err.println("Encontrou");
+        }
+	}
 
 	public DetectorFaceUtils() {
 		// TODO Auto-generated constructor stub
@@ -40,7 +61,7 @@ public class DetectorFaceUtils {
 		cvtColor(imagemColorida, imagemCinza, COLOR_BGRA2GRAY);
 		RectVector facesDetectadas = new RectVector();
  		
-		classificador.detectMultiScale(imagemCinza, facesDetectadas, 1.1, 1, 0, new Size(150, 150), new Size(500, 500));
+		classificadorDeteccao.detectMultiScale(imagemCinza, facesDetectadas, 1.1, 1, 0, new Size(150, 150), new Size(500, 500));
 		return facesDetectadas;
 	}
 
@@ -57,7 +78,8 @@ public class DetectorFaceUtils {
 		return imagemColorida;
 	}
 
-	public Mat tratarImagem(String path) throws Exception {
+
+	public Mat tratarImagem(final String path) throws Exception {
 		File imagem = new File(path);
 		Mat imagemColorida = imread(imagem.getAbsolutePath());
 		RectVector facesDetectadas = detectaFaces(imagemColorida);

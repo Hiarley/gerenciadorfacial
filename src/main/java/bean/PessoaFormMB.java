@@ -75,7 +75,7 @@ public class PessoaFormMB implements Serializable {
 		try {
 			RegraNegocio regraNegocio = null;
 			if(ValidatorUtil.isNotEmpty(pessoa.getId())) {
-				String diretorioDestino = pessoa.getCpf() + File.separator + "Original";
+				String diretorioDestino = pessoa.getCpf().replace(".", "").replace("-", "") + File.separator + "Original";
 				List<Arquivo> fotosAdicionadas = salvarNovasFotosLocal(diretorioDestino);
 				regraNegocio = pessoaService.salvar(pessoa,fotosAdicionadas);
 				fotos = new HashMap<>();
@@ -98,7 +98,7 @@ public class PessoaFormMB implements Serializable {
 				regraNegocio = pessoaService.validaNegocio(pessoa);
 			}
 			if (ValidatorUtil.isNotEmpty(regraNegocio) && !regraNegocio.hasError()) {
-				String diretorioDestino = pessoa.getCpf() + File.separator + "Original";
+				String diretorioDestino = pessoa.getCpf().replace(".", "").replace("-", "") + File.separator + "Original";
 				List<Arquivo> fotosSalvas = salvarNovasFotosLocal(diretorioDestino);
 				regraNegocio = pessoaService.cadastrarPessoa(pessoa, fotosSalvas);
 				fotos = new HashMap<>();
