@@ -37,6 +37,14 @@ public class Pessoa {
 	public Pessoa() {
 		fotos = new ArrayList<>();
 	}
+	public Pessoa(int id, String cpf) {
+		fotos = new ArrayList<>();
+		this.id = id;
+		this.cpf = cpf;
+	}
+	
+	
+	
 
 	public int getId() {
 		return id;
@@ -92,6 +100,10 @@ public class Pessoa {
 
 	public void setFotos(List<Arquivo> fotos) {
 		this.fotos = fotos;
+	}
+
+	public String getCpfSemFormato() {
+		return this.cpf.replace(".", "").replace("-", "");
 	}
 
 	@Override

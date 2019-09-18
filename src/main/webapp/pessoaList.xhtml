@@ -30,6 +30,8 @@
 					<div id="main-buttons" class="">
 						<p:commandButton action="#{pessoaFormMB.novoCadastro()}"
 							icon="fa fa-plus" value="Novo" styleClass="btn-primary" />
+						<p:commandButton action="#{pessoaListMB.treinar()}"
+							icon="fa fa-plus" value="Treinar" styleClass="btn-primary" />
 					</div>
 					<p:separator />
 					<p:dataTable var="pessoa" id="tblPessoas" reflow="true" rows="10"
@@ -46,11 +48,12 @@
 						</p:column>
 						<p:column headerText="Data Nascimento">
 							<h:outputText value="#{pessoa.dataNascimento}">
-								<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 							</h:outputText>
 						</p:column>
 						<p:column width="3%">
-							<p:commandButton action="#{pessoaFormMB.editar(pessoa)}"  icon="fa fa-edit" styleClass=" btn-primary"></p:commandButton>
+							<p:commandButton action="#{pessoaFormMB.editar(pessoa)}"
+								icon="fa fa-edit" styleClass=" btn-primary"></p:commandButton>
 						</p:column>
 
 

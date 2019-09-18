@@ -57,6 +57,7 @@ public class FTPUtils {
 	public void receberTodosArquivosPasta(String pasta) throws IOException {
 		String[] pastas = pasta.split(File.separator);
 		inciarFTP();
+		ftp.changeWorkingDirectory("imagens");
 		for(String p : pastas) {
 			ftp.changeWorkingDirectory(p);
 		}
@@ -91,7 +92,6 @@ public class FTPUtils {
 
 	public void receberArquivo(String nomeArquivo, String nomeCaminhoRecebido) {
 		try {
-			System.out.println(ftp.listNames());
 			FileOutputStream fos = new FileOutputStream(
 					FacesContext.getCurrentInstance().getExternalContext().getRealPath(nomeCaminhoRecebido+File.separator+nomeArquivo));
 			ftp.setFileType(FTPClient.BINARY_FILE_TYPE);

@@ -136,5 +136,9 @@ public class PessoaService {
 		// TODO Auto-generated method stub
 		return this.pessoaDao.findById(id);
 	}
+	
+	public List<Pessoa> findAllCpf(){
+		return this.pessoaDao.findAllCpf();
+	}
 
 }

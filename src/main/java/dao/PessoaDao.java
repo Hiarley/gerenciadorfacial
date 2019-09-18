@@ -13,6 +13,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Selection;
 
 import dominio.Pessoa;
 import dominio.lazy.PessoaLazyFilter;
@@ -63,51 +64,8 @@ public class PessoaDao extends GenericDao<Pessoa>{
 			
 			Predicate predicate = cb.and();
 
-//			if (filtro.getFindBy().values() != null) {
-//				Map<String, Object> filters = filtro.getFindBy();
-//
-//				for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
-//					String filterPropriedade = it.next();
-//					Object filterValor = filters.get(filterPropriedade);
-//					if (filterValor != null) {
-//						if (filterPropriedade.equals("dtSolicitacao")) {
-//
-//							predicate = builder.and(predicate,
-//									builder.like(from.get("dtSolicitacao"), "%" + filterValor.toString() + "%"));
-//						} else {
-//							predicate = builder.and(predicate,
-//									builder.like(from.get(filterPropriedade), "%" + filterValor.toString() + "%"));
-//						}
-//					}
-//
-//				}
-//
-//			}
-
 			CriteriaQuery<Pessoa> queryPaginacao = q.select(root).where(predicate);
 
-//			if (filtro.isAscendente() && filtro.getPropriedadeOrdenacao() != null) {
-//				if (filtro.getPropriedadeOrdenacao().equals("dtSolicitacao")) {
-//					queryPaginacao.orderBy(cb.desc(from.get("dtSolicitacao")));
-//
-//				} else if (filtro.getPropriedadeOrdenacao().equals("stProtocolo")) {
-//					queryPaginacao.orderBy(builder.desc(from.get("id")));
-//				} else {
-//					queryPaginacao.orderBy(builder.desc(from.get(filtro.getPropriedadeOrdenacao())));
-//				}
-//			} else if (filtro.getPropriedadeOrdenacao() != null) {
-//				if (filtro.getPropriedadeOrdenacao().equals("dtSolicitacao")) {
-//					queryPaginacao.orderBy(builder.asc(from.get("dtSolicitacao")));
-//				} else if (filtro.getPropriedadeOrdenacao().equals("stProtocolo")) {
-//
-//					queryPaginacao.orderBy(builder.asc(from.get("id")));
-//				} else {
-//
-//					queryPaginacao.orderBy(builder.asc(from.get(filtro.getPropriedadeOrdenacao())));
-//				}
-//			} else {
-//				queryPaginacao.orderBy(builder.asc(from.get("id")));
-//			}
 			TypedQuery<Pessoa> query = em.createQuery(queryPaginacao);
 			query.setFirstResult(filtro.getPrimeiroRegistro());
 			query.setMaxResults(filtro.getQuantidadeRegistros());
@@ -118,5 +76,11 @@ public class PessoaDao extends GenericDao<Pessoa>{
 		} catch (Exception e) {
 			throw new ExceptionInInitializerError(e);
 		}	}
+
+	public List<Pessoa> findAllCpf() {
+		prepareBuildQuery();
+		q.multiselect(root.get("id"), root.get("cpf"));
+		return this.em.createQuery(q).getResultList();
+	}
 	
 }

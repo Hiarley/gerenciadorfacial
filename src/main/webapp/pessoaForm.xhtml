@@ -84,6 +84,9 @@
 						<p:commandButton value="Salvar" styleClass="btn btn-primary" rendered="#{pessoaFormMB.pessoa.id != 0}"
 							ajax="true" update="@form"
 							actionListener="#{pessoaFormMB.salvar()}"></p:commandButton>
+							<p:commandButton value="Reconhecer" styleClass="btn btn-primary" 
+							ajax="true" update="@form"
+							action="#{pessoaFormMB.reconhecer()}"></p:commandButton>
 					</div>
 				</div>
 
