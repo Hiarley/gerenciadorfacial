@@ -14,7 +14,6 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import org.apache.commons.io.IOUtils;
@@ -27,22 +26,15 @@ import dominio.RegraNegocio;
 import service.PessoaService;
 import utils.ArquivoUtils;
 import utils.FTPUtils;
-import utils.ReconhecimentoLBPH;
 import utils.ValidatorUtil;
 
 @Named
 @SessionScoped
-public class PessoaFormMB implements Serializable {
+public class PessoaFormMB implements Serializable{
 
 	private Pessoa pessoa;
 	private Map<UploadedFile, InputStream> fotos;
 	private List<String> images;
-	private static String contextDirectory = FacesContext.getCurrentInstance().getExternalContext().getRealPath("");
-
-	
-
-	
-	private ReconhecimentoLBPH reconhecimento = new ReconhecimentoLBPH();
 
 	@EJB
 	private PessoaService pessoaService;
@@ -58,11 +50,7 @@ public class PessoaFormMB implements Serializable {
 		images = new ArrayList<>();
 	}
 	
-	public void reconhecer() {
-		File file = new File(contextDirectory +images.get(2));
-		
-		reconhecimento.reconhecer(file, pessoaService.findAllCpf());
-	}
+	
 
 	public String editar(Pessoa pessoa) {
 		try {

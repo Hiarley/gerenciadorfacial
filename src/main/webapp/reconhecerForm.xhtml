@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:adm="http://github.com/adminfaces"
+	template="#{layoutMB.template}">
+
+	<ui:define name="metadata">
+		<ui:param name="title" value="Gerenciador de Pessoas" />
+		<!-- Automatic create breadCrumb and page title when param 'title' is provided. -->
+
+		<style type="text/css">
+.ui-datatable .ui-datatable-header {
+	text-align: right !important;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="description">
+		.
+    </ui:define>
+
+	<ui:define name="body">
+		<h:form>
+			<p:focus context="@form" />
+			<div class="box box-primary col-sm-12">
+				<hr />
+				<div class="ui-g ui-fluid ui-g-nopad">
+					<div class="col-sm-6">
+						<h:panelGrid columns="3" cellpadding="5">
+							<p:photoCam widgetVar="pc" listener="#{reconhecedorMB.oncapture}"
+								update="photo" />
+							<p:commandButton type="button" value="Capture"
+								onclick="PF('pc').capture()" update="@form" />
+							<p:outputPanel id="photo">
+								
+							</p:outputPanel>
+						</h:panelGrid>
+
+
+						<p:fileUpload
+							fileUploadListener="#{reconhecedorMB.handleFileUpload}"
+							mode="advanced" auto="true" 
+							allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+
+						<br /> <br />
+
+						<p:commandButton value="Reconhecer" ajax="true" update="@form"
+							action="#{reconhecedorMB.reconhecer()}" />
+					</div>
+					<div class="col-sm-6">
+						<p>#{reconhecedorMB.pessoa.nome}</p>
+					</div>
+				</div>
+
+
+
+
+
+			</div>
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+				styleClass="box-danger box-solid">
+				<p:commandButton value="Yes" type="button"
+					styleClass="btn-material btn-primary ui-confirmdialog-yes"
+					icon="fa fa-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="btn-material btn-danger ui-confirmdialog-no"
+					icon="fa fa-close" />
+			</p:confirmDialog>
+		</h:form>
+
+
+	</ui:define>
+
+</ui:composition>

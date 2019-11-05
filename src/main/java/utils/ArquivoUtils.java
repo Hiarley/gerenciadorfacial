@@ -99,10 +99,11 @@ public class ArquivoUtils {
 	}
 
 	public static boolean deleteDirectorieAndFiles(String nameDirectorie) throws IOException {
-		File dir = new File(contextDirectory + nameDirectorie);
+		File dir = new File(contextDirectory +File.separator+ nameDirectorie);
+		FileUtils.deleteDirectory(dir);
 		FileUtils.forceDeleteOnExit(dir);
 
-		return FileUtils.getFile(contextDirectory + nameDirectorie).exists();
+		return FileUtils.getFile(contextDirectory +File.separator+ nameDirectorie).exists();
 	}
 	
 	public static boolean saveFace(String caminho, String nameFile, Mat face) {
